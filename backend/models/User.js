@@ -30,7 +30,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "librarian", "member"],
       default: "member",
-      required: true,
     },
 
     status: {
