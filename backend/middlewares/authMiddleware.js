@@ -30,15 +30,16 @@ const checkAuthentication = (request, response, next) => {
   }
 };
 
-const checkAuthorization = (request, response, next) => {
-  if (request.user.role === "admin" || request.user.role === "librarian") {
-    return next();
-  }
-
-  return response.status(401).send(errorResponse("UnAuthorized Access!"));
+const authorizeRoles = (...allowedRoles) => {
+  return (request, response, next) => {
+    if (!request.user || !allowedRoles.includes(request.user.role)) {
+      return response.status(401).send(errorResponse("Unauthorized Access!"));
+    }
+    next();
+  };
 };
 
 module.exports = {
   checkAuthentication,
-  checkAuthorization,
+  authorizeRoles,
 };

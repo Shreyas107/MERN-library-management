@@ -6,9 +6,12 @@ const {
   updateBookValidator,
   deleteBookValidator,
 } = require("../validators/bookValidator");
+const { authorizeRoles } = require("../middlewares/authMiddleware");
 
 // GET: fetch all books (optional filter: by title, author, category)
 router.get("/all", commonController.fetchAllBooks);
+
+router.use(authorizeRoles("admin", "librarian"));
 
 // POST: add new book
 router.post("/add", addBookValidator, libController.addNewBook);

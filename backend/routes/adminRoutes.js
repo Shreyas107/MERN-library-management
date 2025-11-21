@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const adminController = require("../controllers/admin");
-const { checkAuthorization } = require("../middlewares/authMiddleware");
+const { authorizeRoles } = require("../middlewares/authMiddleware");
 const {
   updateRoleValidator,
   updateStatusValidator,
 } = require("../validators/adminValidator");
 
 // check authorzation
-router.use(checkAuthorization);
+router.use(authorizeRoles("admin"));
 
 // GET: fetch all users (optional filter)
 router.get("/users/all", adminController.fetchAllUsers);
