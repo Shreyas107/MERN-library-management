@@ -10,6 +10,7 @@ const { checkAuthentication } = require("./middlewares/authMiddleware");
 const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const librarianRoutes = require("./routes/librarianRoutes");
 
 const app = express();
 
@@ -26,6 +27,7 @@ connectDB();
 app.use("/book", bookRoutes);
 app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
+app.use("/lib", librarianRoutes);
 
 app.use(routeNotFound);
 

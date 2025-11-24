@@ -13,17 +13,17 @@ exports.fetchAllBooks = async (request, response) => {
     }
 
     if (author) {
-      filter.title = { $regex: author, $options: "i" };
+      filter.authors = { $regex: author, $options: "i" };
     }
 
     if (category) {
-      filter.title = { $regex: category, $options: "i" };
+      filter.categories = { $regex: category, $options: "i" };
     }
 
     const books = await Book.find(filter);
 
     if (books.length === 0)
-      return response.send(successResponse(`No book found`));
+      return response.send(successResponse("No book found"));
 
     return response.send(successResponse(books, "books"));
   } catch (error) {

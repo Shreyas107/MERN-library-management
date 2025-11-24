@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema(
 
     membership: {
       type: String,
-      enum: ["student", "faculty", "guest", "public"],
+      enum: ["student", "faculty", "guest"],
       default: "student",
     },
   },
