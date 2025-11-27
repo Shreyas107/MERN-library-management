@@ -1,0 +1,25 @@
+body {
+  background-color: #e2eafc !important;
+  /* background-color: #edf2fb !important; */
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  min-height: 100vh;
+}
+
+.sub-title {
+  color: slateblue;
+  font-weight: bolder;
+}
+
+.navbar {
+  min-height: 60px;
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.navbar .nav-link.link-color {
+  color: white;
+  font-weight: bolder;
+  font-size: large;
+}
