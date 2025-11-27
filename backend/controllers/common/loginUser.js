@@ -9,7 +9,7 @@ exports.loginUser = async (request, response) => {
   try {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
-      return res.send(errorResponse(errors.array()));
+      return response.send(errorResponse(errors.array()));
     }
 
     const { email, password } = request.body;
