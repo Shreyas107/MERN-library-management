@@ -1,18 +1,16 @@
 import { Link, useNavigate } from "react-router";
 import "../styles/global.css";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../features/authSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
-  // const user = JSON.parse(localStorage.getItem("user"));
-  const user = {
-    name: "Shreyas",
-  };
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    navigate("/");
+    dispatch(logout());
+    navigate("/login");
   };
 
   return (
@@ -37,14 +35,19 @@ const Navbar = () => {
         </button>
 
         {/* Links */}
-        <div className="collapse navbar-collapse" id="navbarContent">
-          <ul className="navbar-nav ms-3 mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link to="/" className="nav-link link-color">
-                Home
-              </Link>
-            </li>
-          </ul>
+        <div
+          className="collapse navbar-collapse justify-content-center"
+          id="navbarContent"
+        >
+          {user && (
+            <ul className="navbar-nav ms-3 mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link to="/" className="nav-link link-color">
+                  Home
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
 
         {/* Right Action Buttons */}
@@ -55,7 +58,7 @@ const Navbar = () => {
                 className="btn btn-outline-dark dropdown-toggle fw-bold text-white"
                 data-bs-toggle="dropdown"
               >
-                {user.name || user.email}
+                {user.fullName}
               </button>
               <ul className="dropdown-menu dropdown-menu-end bg-info">
                 <li>

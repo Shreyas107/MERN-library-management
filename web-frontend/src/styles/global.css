@@ -2,9 +2,10 @@ body {
   background-color: #e2eafc !important;
   /* background-color: #edf2fb !important; */
   margin: 0;
-  padding: 0;
+
   font-family: sans-serif;
   min-height: 100vh;
+  padding-top: 60px;
 }
 
 .sub-title {
@@ -22,4 +23,12 @@ body {
   color: white;
   font-weight: bolder;
   font-size: large;
+}
+
+.navbar .nav-link.link-color:hover {
+  color: rgb(65, 17, 255);
+  font-weight: bolder;
+  font-size: larger;
+  transition: all 0.2s ease;
+  text-shadow: 2px 2px 6px rgba(255, 0, 106, 0.5);
 }
