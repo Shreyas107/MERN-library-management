@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { userLogin } from "../services/authServices";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
 import { navigateByRole } from "../utils/roleNavigation";
+import "../styles/global.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Login = () => {
   return (
     <div className="d-flex justify-content-center align-items-center vh-80 mt-5 ">
       <div className="card shadow p-4" style={{ width: "550px" }}>
-        <h3 className="text-center mb-4">Login</h3>
+        <h3 className="text-center mb-4 text-color">Login</h3>
 
         <form onSubmit={handleLogin}>
           {/* Email Input */}
@@ -86,6 +87,16 @@ const Login = () => {
               required
             />
           </div>
+
+          <p className="text-center ">
+            <Link
+              className="text-decoration-none"
+              style={{ color: "slateblue" }}
+              to={"/register"}
+            >
+              New user? Register here
+            </Link>
+          </p>
 
           {/* Submit Button */}
           <div className="d-flex justify-content-center">
