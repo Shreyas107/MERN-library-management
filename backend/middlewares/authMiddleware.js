@@ -2,9 +2,9 @@ const { errorResponse } = require("../utils/apiResponse");
 const { verifyToken } = require("../utils/token");
 
 const checkAuthentication = (request, response, next) => {
-  const skipUrls = ["/user/register", "/user/login"];
+  const skipUrls = ["/user/register", "/user/login", "/book/all"];
 
-  if (skipUrls.includes(request.url)) {
+  if (skipUrls.includes(request.path)) {
     return next();
   }
 
