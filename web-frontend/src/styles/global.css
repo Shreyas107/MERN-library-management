@@ -30,7 +30,7 @@ body {
 }
 
 .navbar .nav-link.link-color:hover {
-  color: rgb(65, 17, 255);
+  color: slateblue;
   font-weight: bolder;
   font-size: larger;
   transition: all 0.2s ease;

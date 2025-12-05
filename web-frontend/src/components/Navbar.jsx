@@ -2,6 +2,9 @@ import { Link, useNavigate } from "react-router";
 import "../styles/global.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
+import AdminLinks from "./links/AdminLinks";
+import LibrarianLinks from "./links/LibrarianLinks";
+import MemberLinks from "./links/MemberLinks";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -11,6 +14,21 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
+  };
+
+  const renderLinks = () => {
+    if (!user) return null;
+
+    switch (user.role) {
+      case "admin":
+        return <AdminLinks />;
+      case "librarian":
+        return <LibrarianLinks />;
+      case "member":
+        return <MemberLinks />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -39,15 +57,7 @@ const Navbar = () => {
           className="collapse navbar-collapse justify-content-center"
           id="navbarContent"
         >
-          {user && (
-            <ul className="navbar-nav ms-3 mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link to="/" className="nav-link link-color">
-                  Home
-                </Link>
-              </li>
-            </ul>
-          )}
+          {renderLinks()}
         </div>
 
         {/* Right Action Buttons */}
