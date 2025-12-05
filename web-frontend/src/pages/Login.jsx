@@ -43,7 +43,10 @@ const Login = () => {
       dispatch(login({ user, token }));
 
       // role based navigation
-      navigateByRole(role, navigate, toast);
+      // navigateByRole(role, navigate, toast);
+
+      // to home page
+      navigate("/home");
     } catch (error) {
       console.error("Login error:", error);
       toast.error(error.message || "Something went wrong!");
