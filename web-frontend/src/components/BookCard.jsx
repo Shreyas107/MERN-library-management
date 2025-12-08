@@ -15,7 +15,7 @@ const BookCard = ({ book }) => {
         <img
           src={`https://covers.openlibrary.org/b/isbn/${book.ISBN}-L.jpg`}
           onError={(e) => {
-            e.target.src = book.coverImageUrl || "/fallback-book.png";
+            e.target.src = book.coverImageUrl || "/fallback-book.jpg";
           }}
           className="card-img-top"
           alt={book.title}
