@@ -11,8 +11,12 @@ const BookCard = ({ book }) => {
   return (
     <div className="col-md-3 mb-4 d-flex">
       <div className="card shadow h-100 w-100 d-flex flex-column">
+        {/* fetching book covers from openlibaray */}
         <img
-          src={book.coverImageUrl}
+          src={`https://covers.openlibrary.org/b/isbn/${book.ISBN}-L.jpg`}
+          onError={(e) => {
+            e.target.src = book.coverImageUrl || "/fallback-book.png";
+          }}
           className="card-img-top"
           alt={book.title}
           style={{ height: "250px", objectFit: "cover" }}
