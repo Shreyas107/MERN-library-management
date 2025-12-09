@@ -11,7 +11,17 @@ exports.addNewBook = async (request, response) => {
       return response.send(errorResponse(errors.array()));
     }
 
-    const newBook = await Book.create(request.body);
+    const { totalCopies, ...otherFields } = request.body;
+
+    const bookData = {
+      ...otherFields,
+      totalCopies,
+      availableCopies: totalCopies,
+    };
+
+    console.log("bookData", bookData);
+
+    const newBook = await Book.create(bookData);
     return response.send(successResponse(`Book added successfully.`));
   } catch (error) {
     console.log("error", error);

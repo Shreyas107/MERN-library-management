@@ -13,10 +13,6 @@ exports.addBookValidator = [
     .isInt({ min: 0 })
     .withMessage("Total copies must be a positive number."),
 
-  body("availableCopies")
-    .isInt({ min: 0 })
-    .withMessage("Available copies must be a positive number."),
-
   body("publicationYear")
     .optional()
     .isInt({ min: 0 })
