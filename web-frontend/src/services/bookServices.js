@@ -1,3 +1,4 @@
+import { authHeader } from "./authHeader";
 import { BASE_URL } from "./config";
 import axios from "axios";
 
@@ -14,5 +15,20 @@ export const getAllBooks = async (query = "") => {
   } catch (error) {
     console.error("Error fetching books:", error);
     return [];
+  }
+};
+
+export const addNewBook = async (bookData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/book/add`,
+      bookData,
+      authHeader()
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    throw error;
   }
 };

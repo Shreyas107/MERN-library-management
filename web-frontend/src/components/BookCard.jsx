@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import bookCover from "../assets/fallback.jpg";
 
 const BookCard = ({ book }) => {
   const navigate = useNavigate();
@@ -14,8 +15,14 @@ const BookCard = ({ book }) => {
         {/* fetching book covers from openlibaray */}
         <img
           src={`https://covers.openlibrary.org/b/isbn/${book.ISBN}-L.jpg`}
+          onLoad={(e) => {
+            // If OpenLibrary returns a blank image
+            if (e.target.naturalWidth <= 1) {
+              e.target.src = book.coverImageUrl || bookCover;
+            }
+          }}
           onError={(e) => {
-            e.target.src = book.coverImageUrl || "/fallback-book.jpg";
+            e.target.src = book.coverImageUrl || bookCover;
           }}
           className="card-img-top"
           alt={book.title}

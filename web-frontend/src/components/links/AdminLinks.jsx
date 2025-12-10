@@ -2,23 +2,67 @@ import { Link } from "react-router";
 
 const AdminLinks = () => {
   return (
-    <ul className="navbar-nav ms-3 mb-2 mb-lg-0">
-      <li className="nav-item">
-        <Link to="/" className="nav-link link-color">
-          Home
+    <div className="d-flex align-items-center ">
+      {/* Dashboard Link */}
+      <div>
+        <Link
+          className="dropdown-item text-white fw-bold mx-2 nav-link link-color"
+          to="/admin/dashboard"
+        >
+          Dashboard
         </Link>
-      </li>
-      <li className="nav-item">
-        <Link to="/manage-users" className="nav-link link-color">
-          Manage Users
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link to="/manage-books" className="nav-link link-color">
-          Manage Books
-        </Link>
-      </li>
-    </ul>
+      </div>
+
+      {/* Book dropdown */}
+      <div className="dropdown mx-2">
+        <button
+          className="btn  dropdown-toggle fw-bold text-white nav-link link-color"
+          data-bs-toggle="dropdown"
+        >
+          Books
+        </button>
+        <ul className="dropdown-menu dropdown-menu-center bg-info">
+          <li>
+            <Link
+              className="dropdown-item text-white"
+              to="/admin/fetch-all-books"
+            >
+              Fetch all books
+            </Link>
+          </li>
+          <li>
+            <Link className="dropdown-item text-white" to="/admin/add-book">
+              Add Book
+            </Link>
+          </li>
+        </ul>
+      </div>
+
+      {/* User dropdown */}
+      <div className="dropdown mx-2">
+        <button
+          className="btn  dropdown-toggle fw-bold text-white nav-link link-color"
+          data-bs-toggle="dropdown"
+        >
+          Users
+        </button>
+        <ul className="dropdown-menu dropdown-menu-center bg-info">
+          <li>
+            <Link
+              className="dropdown-item text-white"
+              to="/admin/fetch-all-users"
+            >
+              Fetch all users
+            </Link>
+          </li>
+          {/* <li>
+            <Link className="dropdown-item text-white" to="/add-book">
+              Add Book
+            </Link>
+          </li> */}
+        </ul>
+      </div>
+    </div>
   );
 };
 
