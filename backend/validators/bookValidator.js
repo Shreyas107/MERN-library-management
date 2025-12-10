@@ -9,6 +9,10 @@ exports.addBookValidator = [
     .isArray({ min: 1 })
     .withMessage("Atleast one Author name is required."),
 
+  body("categories")
+    .isArray({ min: 1 })
+    .withMessage("At least one category is required."),
+
   body("totalCopies")
     .isInt({ min: 0 })
     .withMessage("Total copies must be a positive number."),
