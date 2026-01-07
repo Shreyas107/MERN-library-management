@@ -7,7 +7,7 @@ import { useLocation } from "react-router";
 const AddNewBook = () => {
   const location = useLocation();
   const editingBook = location.state?.book;
-  debugger;
+
   const [title, setTitle] = useState(editingBook?.title || "");
   const [isbn, setIsbn] = useState(editingBook?.ISBN || "");
   const [authors, setAuthors] = useState(editingBook?.authors || []);

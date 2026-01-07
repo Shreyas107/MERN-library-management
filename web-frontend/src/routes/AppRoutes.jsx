@@ -9,6 +9,7 @@ import librarianRoutes from "./LibrarianRoutes";
 import memberRoutes from "./MemberRoutes";
 import { useSelector } from "react-redux";
 import Unauthorized from "../pages/UnAuthorized";
+import BookDetails from "../pages/BookDetails";
 
 const AppRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -22,6 +23,7 @@ const AppRoutes = () => {
       {/* Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/book-details" element={<BookDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/unauthorized" element={<Unauthorized />} />

@@ -26,8 +26,8 @@ const BookCard = ({ book }) => {
     return () => clearTimeout(timeout);
   }, [book]);
 
-  const goToDetails = () => {
-    navigate("/book-detail", { state: book });
+  const goToDetails = (book) => {
+    navigate("/book-details", { state: { book } });
   };
 
   return (
@@ -65,7 +65,7 @@ const BookCard = ({ book }) => {
           <div className="mt-auto">
             <button
               className="btn btn-info text-white w-100"
-              onClick={goToDetails}
+              onClick={() => goToDetails(book)}
             >
               View Details
             </button>
