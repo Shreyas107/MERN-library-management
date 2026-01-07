@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import bookCover from "../assets/fallback.jpg";
 
+const getInitialImage = (book) => {
+  if (book.coverImageUrl) return book.coverImageUrl;
+
+  if (book?.ISBN) {
+    const cleanISBN = book.ISBN.replace(/[-\s]/g, "");
+    return `https://covers.openlibrary.org/b/isbn/${cleanISBN}-L.jpg?default=false`;
+  }
+
+  return bookCover;
+};
+
 const BookCard = ({ book }) => {
   const navigate = useNavigate();
+  const [imgSrc, setImgSrc] = useState(() => getInitialImage(book));
+
+  // Fallback if image request stalls (rate-limit / blocked)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setImgSrc(book.coverImageUrl || bookCover);
+    }, 2500);
+
+    return () => clearTimeout(timeout);
+  }, [book]);
 
   const goToDetails = () => {
     navigate("/book-detail", { state: book });
@@ -12,25 +33,16 @@ const BookCard = ({ book }) => {
   return (
     <div className="col-md-3 mb-4 d-flex">
       <div className="card shadow h-100 w-100 d-flex flex-column">
-        {/* fetching book covers from openlibaray */}
         <img
-          src={`https://covers.openlibrary.org/b/isbn/${book.ISBN}-L.jpg`}
-          onLoad={(e) => {
-            // If OpenLibrary returns a blank image
-            if (e.target.naturalWidth <= 1) {
-              e.target.src = book.coverImageUrl || bookCover;
-            }
-          }}
-          onError={(e) => {
-            e.target.src = book.coverImageUrl || bookCover;
-          }}
-          className="card-img-top"
+          src={imgSrc}
           alt={book.title}
+          loading="lazy"
+          onError={() => setImgSrc(bookCover)}
+          className="card-img-top"
           style={{ height: "250px", objectFit: "cover" }}
         />
 
         <div className="card-body d-flex flex-column">
-          {/* Title */}
           <h5
             className="card-title"
             style={{
@@ -43,18 +55,13 @@ const BookCard = ({ book }) => {
             {book.title}
           </h5>
 
-          {/* Author */}
           <p
             className="card-text mb-3"
-            style={{
-              minHeight: "38px",
-              overflow: "hidden",
-            }}
+            style={{ minHeight: "38px", overflow: "hidden" }}
           >
             <strong>Author:</strong> {book.authors?.join(", ")}
           </p>
 
-          {/* Button */}
           <div className="mt-auto">
             <button
               className="btn btn-info text-white w-100"

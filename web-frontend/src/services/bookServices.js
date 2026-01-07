@@ -32,3 +32,31 @@ export const addNewBook = async (bookData) => {
     throw error;
   }
 };
+
+export const editBook = async (bookInfo) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/book/update/${bookInfo._id}`,
+      bookInfo,
+      authHeader()
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting book: ", error);
+    throw error;
+  }
+};
+
+export const deleteBook = async (bookId) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/book/delete/${bookId}`,
+      authHeader()
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log("Error deleting book: ", error);
+    throw error;
+  }
+};
