@@ -1,17 +1,27 @@
 import React, { useState } from "react";
 import TagsInput from "../../components/TagsInput";
-import { addNewBook } from "../../services/bookServices";
+import { addNewBook, editBook } from "../../services/bookServices";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router";
 
 const AddNewBook = () => {
-  const [title, setTitle] = useState("");
-  const [isbn, setIsbn] = useState("");
-  const [authors, setAuthors] = useState([]);
-  const [publisher, setPublisher] = useState("");
-  const [publicationYear, setPublicationYear] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [description, setDescription] = useState("");
-  const [totalCopies, setTotalCopies] = useState("");
+  const location = useLocation();
+  const editingBook = location.state?.book;
+  debugger;
+  const [title, setTitle] = useState(editingBook?.title || "");
+  const [isbn, setIsbn] = useState(editingBook?.ISBN || "");
+  const [authors, setAuthors] = useState(editingBook?.authors || []);
+  const [publisher, setPublisher] = useState(editingBook?.publisher || "");
+  const [publicationYear, setPublicationYear] = useState(
+    editingBook?.publicationYear || ""
+  );
+  const [categories, setCategories] = useState(editingBook?.categories || []);
+  const [description, setDescription] = useState(
+    editingBook?.description || ""
+  );
+  const [totalCopies, setTotalCopies] = useState(
+    editingBook?.totalCopies || ""
+  );
 
   const handleAddBook = async (e) => {
     e.preventDefault();
@@ -28,29 +38,38 @@ const AddNewBook = () => {
     };
 
     try {
-      const result = await addNewBook(bookData);
-      console.log("result: ", result);
+      let result;
+
+      if (editingBook) {
+        // EDIT
+        result = await editBook({
+          ...bookData,
+          _id: editingBook._id,
+        });
+      } else {
+        // ADD
+        result = await addNewBook(bookData);
+      }
 
       if (result.status === "success") {
         toast.success(result.message);
       } else {
-        // Extract error message from string OR array format
         const msg = Array.isArray(result.error)
           ? result.error[0].msg
           : result.error;
-
         throw new Error(msg);
       }
     } catch (error) {
       toast.error(error.message || "Something went wrong");
-      console.log("Add Book Error:", error);
     }
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-80 mt-5">
       <div className="card shadow p-4" style={{ width: "550px" }}>
-        <h3 className="text-center mb-4 text-color">Add New Book</h3>
+        <h3 className="text-center mb-4 text-color">
+          {editingBook ? "Update Book" : "Add New Book"}
+        </h3>
 
         <form onSubmit={handleAddBook}>
           {/* Title */}
@@ -145,7 +164,7 @@ const AddNewBook = () => {
           {/* Submit */}
           <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-info text-white w-50">
-              Add Book
+              {editingBook ? "Update Book" : "Add Book"}
             </button>
           </div>
         </form>

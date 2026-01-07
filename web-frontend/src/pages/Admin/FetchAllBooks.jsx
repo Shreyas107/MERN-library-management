@@ -3,13 +3,15 @@ import { BiCaretUp } from "react-icons/bi";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import BookModal from "../../components/BookModal";
-import { deleteBook, editBook, getAllBooks } from "../../services/bookServices";
+import { deleteBook, getAllBooks } from "../../services/bookServices";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const FetchAllBooks = () => {
   const [books, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAllBooks();
@@ -41,20 +43,8 @@ const FetchAllBooks = () => {
     }
   };
 
-  const handleBookEdit = async (bookInfo) => {
-    try {
-      const result = await editBook(bookInfo);
-
-      if (result.status !== "success") {
-        toast.error(result.error[0].msg);
-      }
-
-      toast.success(result.message);
-      fetchAllBooks();
-      // debugger;
-    } catch (error) {
-      console.log("error: ", error);
-    }
+  const handleBookEdit = (book) => {
+    navigate("/admin/add-book", { state: { book } });
   };
 
   return (
