@@ -37,7 +37,7 @@ const Home = () => {
 
     if (filters.title) {
       result = result.filter((book) =>
-        book.title.toLowerCase().includes(filters.title.toLowerCase())
+        book.title.toLowerCase().includes(filters.title.toLowerCase()),
       );
     }
 
@@ -46,13 +46,13 @@ const Home = () => {
         book.authors
           .join(", ")
           .toLowerCase()
-          .includes(filters.author.toLowerCase())
+          .includes(filters.author.toLowerCase()),
       );
     }
 
     if (filters.category) {
       result = result.filter((book) =>
-        book.categories.includes(filters.category)
+        book.categories.includes(filters.category),
       );
     }
 
@@ -111,9 +111,16 @@ const Home = () => {
       </div>
 
       {/* Book Cards */}
-      <div className="row">
+      <div className="row g-4">
         {filteredBooks.length > 0 ? (
-          filteredBooks.map((book) => <BookCard key={book._id} book={book} />)
+          filteredBooks.map((book) => (
+            <div
+              key={book._id}
+              className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+            >
+              <BookCard book={book} />
+            </div>
+          ))
         ) : (
           <p className="text-center">No books found</p>
         )}

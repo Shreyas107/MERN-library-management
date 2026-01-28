@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import "../styles/global.css";
+import bookCover from "../assets/fallback.jpg";
+
+const getInitialImage = (book) => {
+  if (book?.ISBN) {
+    const cleanISBN = book.ISBN.replace(/[-\s]/g, "");
+    return `https://covers.openlibrary.org/b/isbn/${cleanISBN}-L.jpg?default=false`;
+  }
+  return bookCover;
+};
 
 const BookDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const book = location.state?.book;
+
+  const [imgSrc, setImgSrc] = useState(
+    book ? getInitialImage(book) : bookCover,
+  );
+
+  useEffect(() => {
+    if (book) {
+      setImgSrc(getInitialImage(book));
+    }
+  }, [book]);
 
   if (!book) {
     return (
@@ -25,10 +44,11 @@ const BookDetails = () => {
           {/* Left: Book Cover */}
           <div className="col-md-4 text-center">
             <img
-              src={book.coverImageUrl}
+              src={imgSrc}
               alt={book.title}
               className="img-fluid rounded"
               style={{ maxHeight: "320px", objectFit: "cover" }}
+              onError={() => setImgSrc(bookCover)}
             />
           </div>
 
@@ -37,7 +57,7 @@ const BookDetails = () => {
             <h3 className="mb-3 sub-title">{book.title}</h3>
 
             <p className="mb-1">
-              <strong>Author(s):</strong> {book.authors.join(", ")}
+              <strong>Author(s):</strong> {book.authors?.join(", ")}
             </p>
 
             <p className="mb-1">
@@ -54,8 +74,8 @@ const BookDetails = () => {
 
             <p className="mb-1">
               <strong>Categories:</strong>{" "}
-              <span className="badge bg-info text-dark me-1">
-                {book.categories.join(", ")}
+              <span className="badge bg-info text-dark">
+                {book.categories?.join(", ")}
               </span>
             </p>
 
@@ -67,7 +87,6 @@ const BookDetails = () => {
               </span>
             </div>
 
-            {/* Optional Back Button */}
             <div className="mt-4">
               <button
                 className="btn btn-outline-secondary"
