@@ -74,7 +74,7 @@ const BookDetails = () => {
 
             <p className="mb-1">
               <strong>Categories:</strong>{" "}
-              <span className="badge bg-info text-dark">
+              <span className="badge bg-info text-light">
                 {book.categories?.join(", ")}
               </span>
             </p>
