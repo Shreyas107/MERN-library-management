@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiCaretUp } from "react-icons/bi";
-import { MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin2Fill } from "react-icons/ri";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 import BookModal from "../../components/BookModal";
 import { deleteBook, getAllBooks } from "../../services/bookServices";
 import { toast } from "react-toastify";
@@ -49,7 +48,7 @@ const FetchAllBooks = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <div className="shadow">
+      <div className="shadow table-responsive rounded">
         <table className="table table-striped table-hover">
           <thead>
             <tr>
@@ -90,14 +89,14 @@ const FetchAllBooks = () => {
                         onClick={() => handleBookEdit(b)}
                         className="btn btn-warning btn-sm"
                       >
-                        <MdOutlineEdit />
+                        <FiEdit />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleBookDelete(b._id)}
                         className="btn btn-danger btn-sm"
                       >
-                        <RiDeleteBin2Fill />
+                        <FiTrash2 />
                       </button>
                     </div>
                   </td>
