@@ -1,104 +1,169 @@
-import React, { useMemo, useState } from "react";
-import DisplayUserTable from "../../components/DisplayUserTable";
-const mockUsers = [
-  {
-    _id: "1",
-    fullName: "John Doe",
-    email: "john@example.com",
-    phone: "9876543210",
-    role: "admin",
-    status: "active",
-    membership: "Gold",
-  },
-  {
-    _id: "2",
-    fullName: "Jane Smith",
-    email: "jane@example.com",
-    phone: "9123456789",
-    role: "user",
-    status: "active",
-    membership: "Silver",
-  },
-  {
-    _id: "3",
-    fullName: "Alex Brown",
-    email: "alex@example.com",
-    phone: "",
-    role: "user",
-    status: "inactive",
-    membership: "Free",
-  },
-  {
-    _id: "4",
-    fullName: "Emily Clark",
-    email: "emily@example.com",
-    phone: "9988776655",
-    role: "user",
-    status: "active",
-    membership: "Platinum",
-  },
-];
+import React, { useEffect, useState } from "react";
+import { dashboardStats } from "../../services/adminServices";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
-  const [users, setUsers] = useState(mockUsers);
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    activeUsers: 0,
+    inactiveUsers: 0,
+    admins: 0,
+    totalBooks: 0,
+    availableBooks: 0,
+    issuedBooks: 0,
+  });
+  const [loading, setLoading] = useState(true);
 
-  const stats = useMemo(() => {
-    return {
-      total: users.length,
-      active: users.filter((u) => u.status === "active").length,
-      inactive: users.filter((u) => u.status === "inactive").length,
-      admins: users.filter((u) => u.role === "admin").length,
-    };
-  }, [users]);
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await dashboardStats();
+
+      if (response.status === "success" && response.dashboardStats) {
+        setStats(response.dashboardStats);
+      } else {
+        toast.error("Failed to fetch dashboard stats ❌");
+      }
+    } catch (error) {
+      console.error("Dashboard fetch error:", error);
+      toast.error("Failed to load dashboard data ❌");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  if (loading) {
+    return <div className="container py-4">Loading dashboard...</div>;
+  }
+
+  // Gradient + shadow styles
+  const cardStyle = {
+    border: "none",
+    borderRadius: "12px",
+    color: "#fff",
+    padding: "20px",
+    minHeight: "120px",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.12)",
+  };
 
   return (
     <div className="container-fluid py-4">
       <h3 className="mb-4 fw-bold">Admin Dashboard</h3>
 
-      {/* Stats */}
+      {/* User Stats */}
       <div className="row g-3 mb-4">
         <div className="col-md-3">
-          <div className="card shadow-sm border-0">
-            <div className="card-body">
-              <h6 className="text-muted">Total Users</h6>
-              <h3 className="fw-bold">{stats.total}</h3>
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              ...cardStyle,
+              background: "linear-gradient(135deg, #6a11cb, #2575fc)",
+            }}
+          >
+            <div>
+              <h6>Total Users</h6>
+              <h3 className="fw-bold">{stats.totalUsers}</h3>
             </div>
           </div>
         </div>
 
         <div className="col-md-3">
-          <div className="card shadow-sm border-0">
-            <div className="card-body">
-              <h6 className="text-muted">Active Users</h6>
-              <h3 className="fw-bold text-success">{stats.active}</h3>
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              ...cardStyle,
+              background: "linear-gradient(135deg, #11998e, #38ef7d)",
+            }}
+          >
+            <div>
+              <h6>Active Users</h6>
+              <h3 className="fw-bold">{stats.activeUsers}</h3>
             </div>
           </div>
         </div>
 
         <div className="col-md-3">
-          <div className="card shadow-sm border-0">
-            <div className="card-body">
-              <h6 className="text-muted">Inactive Users</h6>
-              <h3 className="fw-bold text-secondary">{stats.inactive}</h3>
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              ...cardStyle,
+              background: "linear-gradient(135deg, #757f9a, #d7dde8)",
+              color: "#333",
+            }}
+          >
+            <div>
+              <h6>Inactive Users</h6>
+              <h3 className="fw-bold">{stats.inactiveUsers}</h3>
             </div>
           </div>
         </div>
 
         <div className="col-md-3">
-          <div className="card shadow-sm border-0">
-            <div className="card-body">
-              <h6 className="text-muted">Admins</h6>
-              <h3 className="fw-bold text-primary">{stats.admins}</h3>
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              ...cardStyle,
+              background: "linear-gradient(135deg, #ff416c, #ff4b2b)",
+            }}
+          >
+            <div>
+              <h6>Admins</h6>
+              <h3 className="fw-bold">{stats.admins}</h3>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Users Table */}
-      <div className="card shadow-sm border-0">
-        <div className="card-body">
-          <h5 className="mb-3">Users</h5>
-          <DisplayUserTable users={users} />
+      {/* Book Stats */}
+      <div className="row g-3 mb-4">
+        <div className="col-md-4">
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              ...cardStyle,
+              background: "linear-gradient(135deg, #f7971e, #ffd200)",
+              color: "#333",
+            }}
+          >
+            <div>
+              <h6>Total Books</h6>
+              <h3 className="fw-bold">{stats.totalBooks}</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-4">
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              ...cardStyle,
+              background: "linear-gradient(135deg, #43cea2, #185a9d)",
+            }}
+          >
+            <div>
+              <h6>Available Books</h6>
+              <h3 className="fw-bold">{stats.availableBooks}</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-4">
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              ...cardStyle,
+              background: "linear-gradient(135deg, #ff4b1f, #1fddff)",
+            }}
+          >
+            <div>
+              <h6>Issued Books</h6>
+              <h3 className="fw-bold">{stats.issuedBooks}</h3>
+            </div>
+          </div>
         </div>
       </div>
     </div>

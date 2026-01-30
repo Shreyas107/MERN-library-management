@@ -47,3 +47,17 @@ export const updateUserStatus = async (userId, status) => {
     throw error;
   }
 };
+
+export const dashboardStats = async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/admin/dashboard/stats`,
+      authHeader(),
+    );
+    debugger;
+    return response.data;
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
+};
