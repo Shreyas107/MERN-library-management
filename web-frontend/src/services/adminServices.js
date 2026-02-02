@@ -54,7 +54,6 @@ export const dashboardStats = async () => {
       `${BASE_URL}/admin/dashboard/stats`,
       authHeader(),
     );
-    debugger;
     return response.data;
   } catch (error) {
     console.log("Error: ", error);
