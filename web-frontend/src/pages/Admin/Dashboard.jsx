@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { dashboardStats } from "../../services/adminServices";
 import { toast } from "react-toastify";
+import {
+  FaUsers,
+  FaUserCheck,
+  FaUserTimes,
+  FaUserShield,
+  FaBook,
+  FaBookOpen,
+  FaBookReader,
+} from "react-icons/fa";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -40,7 +49,6 @@ const Dashboard = () => {
     return <div className="container py-4">Loading dashboard...</div>;
   }
 
-  // Gradient + shadow styles
   const cardStyle = {
     border: "none",
     borderRadius: "12px",
@@ -48,6 +56,11 @@ const Dashboard = () => {
     padding: "20px",
     minHeight: "120px",
     boxShadow: "0 8px 20px rgba(0,0,0,0.12)",
+  };
+
+  const iconStyle = {
+    fontSize: "36px",
+    marginBottom: "10px",
   };
 
   return (
@@ -58,62 +71,58 @@ const Dashboard = () => {
       <div className="row g-3 mb-4">
         <div className="col-md-3">
           <div
-            className="d-flex align-items-center justify-content-center"
+            className="text-center"
             style={{
               ...cardStyle,
               background: "linear-gradient(135deg, #6a11cb, #2575fc)",
             }}
           >
-            <div>
-              <h6>Total Users</h6>
-              <h3 className="fw-bold">{stats.totalUsers}</h3>
-            </div>
+            <FaUsers style={iconStyle} />
+            <h6>Total Users</h6>
+            <h3 className="fw-bold">{stats.totalUsers}</h3>
           </div>
         </div>
 
         <div className="col-md-3">
           <div
-            className="d-flex align-items-center justify-content-center"
+            className="text-center"
             style={{
               ...cardStyle,
               background: "linear-gradient(135deg, #11998e, #38ef7d)",
             }}
           >
-            <div>
-              <h6>Active Users</h6>
-              <h3 className="fw-bold">{stats.activeUsers}</h3>
-            </div>
+            <FaUserCheck style={iconStyle} />
+            <h6>Active Users</h6>
+            <h3 className="fw-bold">{stats.activeUsers}</h3>
           </div>
         </div>
 
         <div className="col-md-3">
           <div
-            className="d-flex align-items-center justify-content-center"
+            className="text-center"
             style={{
               ...cardStyle,
               background: "linear-gradient(135deg, #757f9a, #d7dde8)",
               color: "#333",
             }}
           >
-            <div>
-              <h6>Inactive Users</h6>
-              <h3 className="fw-bold">{stats.inactiveUsers}</h3>
-            </div>
+            <FaUserTimes style={{ ...iconStyle, color: "#333" }} />
+            <h6>Inactive Users</h6>
+            <h3 className="fw-bold">{stats.inactiveUsers}</h3>
           </div>
         </div>
 
         <div className="col-md-3">
           <div
-            className="d-flex align-items-center justify-content-center"
+            className="text-center"
             style={{
               ...cardStyle,
               background: "linear-gradient(135deg, #ff416c, #ff4b2b)",
             }}
           >
-            <div>
-              <h6>Admins</h6>
-              <h3 className="fw-bold">{stats.admins}</h3>
-            </div>
+            <FaUserShield style={iconStyle} />
+            <h6>Admins</h6>
+            <h3 className="fw-bold">{stats.admins}</h3>
           </div>
         </div>
       </div>
@@ -122,47 +131,44 @@ const Dashboard = () => {
       <div className="row g-3 mb-4">
         <div className="col-md-4">
           <div
-            className="d-flex align-items-center justify-content-center"
+            className="text-center"
             style={{
               ...cardStyle,
               background: "linear-gradient(135deg, #f7971e, #ffd200)",
               color: "#333",
             }}
           >
-            <div>
-              <h6>Total Books</h6>
-              <h3 className="fw-bold">{stats.totalBooks}</h3>
-            </div>
+            <FaBook style={{ ...iconStyle, color: "#333" }} />
+            <h6>Total Books</h6>
+            <h3 className="fw-bold">{stats.totalBooks}</h3>
           </div>
         </div>
 
         <div className="col-md-4">
           <div
-            className="d-flex align-items-center justify-content-center"
+            className="text-center"
             style={{
               ...cardStyle,
               background: "linear-gradient(135deg, #43cea2, #185a9d)",
             }}
           >
-            <div>
-              <h6>Available Books</h6>
-              <h3 className="fw-bold">{stats.availableBooks}</h3>
-            </div>
+            <FaBookOpen style={iconStyle} />
+            <h6>Available Books</h6>
+            <h3 className="fw-bold">{stats.availableBooks}</h3>
           </div>
         </div>
 
         <div className="col-md-4">
           <div
-            className="d-flex align-items-center justify-content-center"
+            className="text-center"
             style={{
               ...cardStyle,
               background: "linear-gradient(135deg, #ff4b1f, #1fddff)",
             }}
           >
-            <div>
-              <h6>Issued Books</h6>
-              <h3 className="fw-bold">{stats.issuedBooks}</h3>
-            </div>
+            <FaBookReader style={iconStyle} />
+            <h6>Issued Books</h6>
+            <h3 className="fw-bold">{stats.issuedBooks}</h3>
           </div>
         </div>
       </div>
