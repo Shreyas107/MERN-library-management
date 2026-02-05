@@ -50,7 +50,7 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute
             isAuthenticated={isAuthenticated}
-            allowedRoles={["librarian"]}
+            allowedRoles={["librarian", "admin"]}
             userRole={userRole}
           />
         }

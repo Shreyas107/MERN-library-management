@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import "../styles/global.css";
 import bookCover from "../assets/fallback.jpg";
+import { useSelector } from "react-redux";
 
 const getInitialImage = (book) => {
   if (book?.ISBN) {
@@ -15,6 +16,13 @@ const BookDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const book = location.state?.book;
+
+  const { user } = useSelector((state) => state.auth);
+  const isLibrarian = user?.role === "librarian" || user?.role === "admin";
+
+  const handleIssueBook = () => {
+    navigate(`/librarian/issue-book/${book._id}`);
+  };
 
   const [imgSrc, setImgSrc] = useState(
     book ? getInitialImage(book) : bookCover,
@@ -87,13 +95,23 @@ const BookDetails = () => {
               </span>
             </div>
 
-            <div className="mt-4">
+            {/* ACTION BUTTONS */}
+            <div className="mt-4 d-flex gap-2">
               <button
                 className="btn btn-outline-secondary"
                 onClick={() => navigate(-1)}
               >
                 Back
               </button>
+
+              {isLibrarian && book.availableCopies > 0 && (
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={handleIssueBook}
+                >
+                  Issue Book
+                </button>
+              )}
             </div>
           </div>
         </div>
