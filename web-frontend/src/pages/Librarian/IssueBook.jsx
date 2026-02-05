@@ -51,7 +51,13 @@ const IssueBook = () => {
         navigate("/home");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Issue failed");
+      const apiMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
+        "Issue failed";
+
+      toast.error(apiMessage);
     } finally {
       setLoading(false);
     }

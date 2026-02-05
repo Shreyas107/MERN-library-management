@@ -12,7 +12,6 @@ export const issueBook = async ({ bookId, userId }) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching books:", error);
     throw error;
   }
 };
