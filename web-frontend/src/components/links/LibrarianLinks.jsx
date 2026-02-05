@@ -9,12 +9,12 @@ const LibrarianLinks = () => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/issued-books" className="nav-link link-color">
+        <Link to="/librarian/issued-books" className="nav-link link-color">
           Issued Books
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/add-book" className="nav-link link-color">
+        <Link to="/librarian/add-book" className="nav-link link-color">
           Add Book
         </Link>
       </li>

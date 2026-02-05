@@ -30,3 +30,30 @@ export const searchMembers = async (query) => {
     throw error;
   }
 };
+
+export const getAllIssuedBooks = async () => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/lib/all-issued-books`,
+      authHeader(),
+    );
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching issued books:", err);
+    throw err;
+  }
+};
+
+export const returnBook = async ({ userId, bookId }) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/lib/return-book`,
+      { userId, bookId },
+      authHeader(),
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error returning book:", error);
+    throw error;
+  }
+};
